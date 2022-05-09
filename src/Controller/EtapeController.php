@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Etape;
 use App\Form\EtapeType;
 use App\Repository\EtapeRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +19,7 @@ class EtapeController extends AbstractController
     /**
      * @Route("/", name="app_etape_index", methods={"GET"})
      */
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(ManagerRegistry $entityManager): Response
     {
         $etapes = $entityManager
             ->getRepository(Etape::class)
@@ -32,7 +33,7 @@ class EtapeController extends AbstractController
     /**
      * @Route("/new", name="app_etape_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, ManagerRegistry $entityManager): Response
     {
         $etape = new Etape();
         $form = $this->createForm(EtapeType::class, $etape);
@@ -64,7 +65,7 @@ class EtapeController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_etape_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Etape $etape, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Etape $etape, ManagerRegistry $entityManager): Response
     {
         $form = $this->createForm(EtapeType::class, $etape);
         $form->handleRequest($request);
@@ -84,7 +85,7 @@ class EtapeController extends AbstractController
     /**
      * @Route("/{id}", name="app_etape_delete", methods={"POST"})
      */
-    public function delete(Request $request, Etape $etape, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Etape $etape, ManagerRegistry $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$etape->getId(), $request->request->get('_token'))) {
             $entityManager->remove($etape);
