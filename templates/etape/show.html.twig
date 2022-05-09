@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Etape{% endblock %}
+
+{% block body %}
+    <h1>Etape</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ etape.id }}</td>
+            </tr>
+            <tr>
+                <th>Depart</th>
+                <td>{{ etape.depart }}</td>
+            </tr>
+            <tr>
+                <th>Arrival</th>
+                <td>{{ etape.arrival }}</td>
+            </tr>
+            <tr>
+                <th>Depart_date</th>
+                <td>{{ etape.departDate ? etape.departDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Arrival_date</th>
+                <td>{{ etape.arrivalDate ? etape.arrivalDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Seat</th>
+                <td>{{ etape.seat }}</td>
+            </tr>
+            <tr>
+                <th>Gate</th>
+                <td>{{ etape.gate }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_etape_index') }}">back to list</a>
+
+    <a href="{{ path('app_etape_edit', {'id': etape.id}) }}">edit</a>
+
+    {{ include('etape/_delete_form.html.twig') }}
+{% endblock %}
