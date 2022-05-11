@@ -27,8 +27,8 @@
                 <td>{{ etape.seat }}</td>
                 <td>{{ etape.gate }}</td>
                 <td>
-                    <a href="{{ path('app_etape_show', {'id': etape.id}) }}">show</a>
-                    <a href="{{ path('app_etape_edit', {'id': etape.id}) }}">edit</a>
+                    <a class="btn btn-danger" href="{{ path('app_etape_show', {'id': etape.id}) }}">show</a>
+                    <a class="btn btn-danger" href="{{ path('app_etape_edit', {'id': etape.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -40,4 +40,4 @@
     </table>
 
    <!-- <a href="{{ path('app_etape_new') }}">add new step</a>-->
-   <a href="{{ path('add_etape', {'id': voyage.id}) }}">add a new step</a>
+   <a class="btn btn-success" href="{{ path('add_etape', {'id': voyage.id}) }}">add a new stage</a>
