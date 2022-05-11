@@ -1,0 +1,43 @@
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Transport Type</th>
+                <th>Transport Number</th>
+                <th>Depart</th>
+                <th>Arrival</th>
+                <th>Depart_date</th>
+                <th>Arrival_date</th>
+                <th>Seat</th>
+                <th>Gate</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for etape in etapes %}
+            <tr>
+                <td>{{ etape.id }}</td>
+                <td>{{ etape.transport.typeTransport.libelle }}</td>
+                <td>{{ etape.transport.number }}</td>
+                <td>{{ etape.depart }}</td>
+                <td>{{ etape.arrival }}</td>
+                <td>{{ etape.departDate ? etape.departDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ etape.arrivalDate ? etape.arrivalDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ etape.seat }}</td>
+                <td>{{ etape.gate }}</td>
+                <td>
+                    <a href="{{ path('app_etape_show', {'id': etape.id}) }}">show</a>
+                    <a href="{{ path('app_etape_edit', {'id': etape.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+   <!-- <a href="{{ path('app_etape_new') }}">add new step</a>-->
+   <a href="{{ path('add_etape', {'id': voyage.id}) }}">add a new step</a>
