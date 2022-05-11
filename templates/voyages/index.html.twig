@@ -3,33 +3,21 @@
 {% block title %}Voyages index{% endblock %}
 
 {% block body %}
-    <h1>Voyages index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Libelle</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <h1>Voyages</h1>
         {% for voyage in voyages %}
-            <tr>
-                <td>{{ voyage.id }}</td>
-                <td>{{ voyage.libelle }}</td>
-                <td>
-                    <a href="{{ path('app_voyages_show', {'id': voyage.id}) }}">show</a>
-                    <a href="{{ path('app_voyages_edit', {'id': voyage.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
+        <div>
+            <div>
+                <h2>{{ voyage.libelle }} --{{ voyage.id }}</h2>
+                <a href="{{ path('app_voyages_show', {'id': voyage.id}) }}">show</a>
+                <a href="{{ path('app_voyages_edit', {'id': voyage.id}) }}">edit</a>
+               <!-- <a href="{{ path('add_etape', {'id': voyage.id}) }}">add Step</a>-->
+                <a href="{{ path('app_voyages_new') }}">Add new trip</a>
+            </div>
+            <div>
+                {{ include('voyages/_etapes.html.twig', {'etapes': voyage.getEtapes()}) }}
+            </div>
+        </div>
         {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_voyages_new') }}">Create new</a>
+    <a href="{{ path('app_voyages_new') }}">Add new trip</a>
 {% endblock %}

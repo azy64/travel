@@ -11,9 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/voyages")
- */
+
 class VoyagesController extends AbstractController
 {
     /**
@@ -33,15 +31,17 @@ class VoyagesController extends AbstractController
     /**
      * @Route("/new", name="app_voyages_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, ManagerRegistry $entityManager): Response
+    public function new(Request $request): Response
     {
         $voyage = new Voyages();
         $form = $this->createForm(VoyagesType::class, $voyage);
         $form->handleRequest($request);
+        $ent = $this->getDoctrine()->getManager();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($voyage);
-            $entityManager->flush();
+           // dd($ent);
+            $ent->persist($voyage);
+            $ent->flush();
 
             return $this->redirectToRoute('app_voyages_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -53,7 +53,7 @@ class VoyagesController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="app_voyages_show", methods={"GET"})
+     * @Route("/show/{id}", name="app_voyages_show", methods={"GET"})
      */
     public function show(Voyages $voyage): Response
     {
@@ -63,12 +63,13 @@ class VoyagesController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="app_voyages_edit", methods={"GET", "POST"})
+     * @Route("/edit/{id}", name="app_voyages_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Voyages $voyage, ManagerRegistry $entityManager): Response
+    public function edit(Request $request, Voyages $voyage): Response
     {
         $form = $this->createForm(VoyagesType::class, $voyage);
         $form->handleRequest($request);
+        $entityManager = $this->getDoctrine()->getManager();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
@@ -83,11 +84,12 @@ class VoyagesController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="app_voyages_delete", methods={"POST"})
+     * @Route("/delete/{id}", name="app_voyages_delete", methods={"POST"})
      */
     public function delete(Request $request, Voyages $voyage, ManagerRegistry $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$voyage->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($voyage);
             $entityManager->flush();
         }
