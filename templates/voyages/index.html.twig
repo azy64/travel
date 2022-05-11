@@ -3,21 +3,31 @@
 {% block title %}Voyages index{% endblock %}
 
 {% block body %}
-    <h1>Voyages</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center">Voyages</h1>
         {% for voyage in voyages %}
         <div>
-            <div>
+            <div class="row mt-5">
+                <div class="col-md-4">
                 <h2>{{ voyage.libelle }} --{{ voyage.id }}</h2>
-                <a href="{{ path('app_voyages_show', {'id': voyage.id}) }}">show</a>
-                <a href="{{ path('app_voyages_edit', {'id': voyage.id}) }}">edit</a>
+                </div>
+                <div class="col-md-8 text-start">
+                <a class="btn btn-danger" href="{{ path('app_voyages_show', {'id': voyage.id}) }}">show</a>
+                <a class="btn btn-danger" href="{{ path('app_voyages_edit', {'id': voyage.id}) }}">edit</a>
                <!-- <a href="{{ path('add_etape', {'id': voyage.id}) }}">add Step</a>-->
-                <a href="{{ path('app_voyages_new') }}">Add new trip</a>
+                <a class="btn btn-success " href="{{ path('app_voyages_new') }}">Add new trip</a>
+                </div>
             </div>
             <div>
                 {{ include('voyages/_etapes.html.twig', {'etapes': voyage.getEtapes()}) }}
             </div>
         </div>
         {% endfor %}
-
-    <a href="{{ path('app_voyages_new') }}">Add new trip</a>
+            </div>
+        </div>
+        <a class="btn btn-primary mt-3" href="{{ path('app_voyages_new') }}">Add new trip</a>
+    </div>
+    
 {% endblock %}
